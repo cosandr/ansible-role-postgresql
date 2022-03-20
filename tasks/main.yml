@@ -5,12 +5,17 @@
 # Setup/install tasks.
 - include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
+  tags: ["install"]
 
 - include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
+  tags: ["install"]
 
 - include_tasks: initialize.yml
+  tags: ["install"]
+
 - include_tasks: configure.yml
+  tags: ["configure"]
 
 - include_tasks: setup-ssl.yml
   when: postgresql_setup_ssl | bool

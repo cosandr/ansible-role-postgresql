@@ -19,3 +19,4 @@
     ansible_ssh_pipelining: true
   environment:
     PGOPTIONS: "{{ (postgresql_auth_method == 'scram-sha-256') | ternary('-c password_encryption=scram-sha-256', '') }}"
+  tags: ["users"]
