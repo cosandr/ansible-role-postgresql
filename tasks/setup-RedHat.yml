@@ -1,4 +1,35 @@
 ---
+
+- block:
+    - name: Install PGSQL rpm key
+      rpm_key:
+        key: "https://apt.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG"
+        state: present
+
+    - name: Install PGSQL repo [EL]
+      dnf:
+        name: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+        state: present
+      when: ansible_distribution != 'Fedora'
+
+    - name: Install PGSQL repo [Fedora]
+      dnf:
+        name: "https://download.postgresql.org/pub/repos/yum/reporpms/F-{{ ansible_distribution_major_version }}-x86_64/pgdg-fedora-repo-latest.noarch.rpm"
+        state: present
+      when: ansible_distribution == 'Fedora'
+
+    - name: Disable default PGSQL module
+      ini_file:
+        path: /etc/dnf/modules.d/postgresql.module
+        section: postgresql
+        option: state
+        value: disabled
+        no_extra_spaces: false
+        owner: root
+        group: root
+        mode: 0644
+  when: postgresql_official_repo | bool
+
 - name: Ensure PostgreSQL packages are installed.
   yum:
     name: "{{ postgresql_packages }}"
