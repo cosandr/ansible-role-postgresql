@@ -12,6 +12,10 @@
 - include_tasks: initialize.yml
 - include_tasks: configure.yml
 
+- include_tasks: setup-ssl.yml
+  when: postgresql_setup_ssl | bool
+  tags: ["ssl"]
+
 - name: Ensure PostgreSQL is started and enabled on boot.
   service:
     name: "{{ postgresql_daemon }}"
