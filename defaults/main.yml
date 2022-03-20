@@ -70,5 +70,7 @@ postgresql_users: []
 #   port: # defaults to not set
 #   state: # defaults to 'present'
 
+postgresql_extensions: []
+
 # Whether to output user data when managing users.
 postgres_users_no_log: false
