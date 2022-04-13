@@ -1,0 +1,41 @@
+---
+
+- name: Install logrotate
+  package:
+    name: logrotate
+    state: present
+  tags: ["install", "logrotate"]
+
+- name: Configure logrotate for postgres
+  template:
+    src: "logrotate.conf.j2"
+    dest: "/etc/logrotate.d/postgres"
+    owner: root
+    group: root
+    mode: 0644
+  tags: ["logrotate"]
+
+- name: Ensure logging directory exists
+  file:
+    path: "{{ postgresql_log_directory }}"
+    state: directory
+    owner: postgres
+    group: postgres
+    mode: 0750
+
+- name: Copy logging config
+  template:
+    src: "logging.conf.j2"
+    dest: "{{ postgresql_config_path }}/logging.conf"
+    owner: postgres
+    group: postgres
+    mode: 0644
+  notify: restart postgresql
+
+- name: Configure PostgreSQL logging
+  lineinfile:
+    dest: "{{ postgresql_config_path }}/postgresql.conf"
+    regexp: "^include 'logging.*"
+    line: "include 'logging.conf'"
+    state: present
+  notify: restart postgresql

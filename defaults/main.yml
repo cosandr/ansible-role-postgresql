@@ -74,3 +74,16 @@ postgresql_extensions: []
 
 # Whether to output user data when managing users.
 postgres_users_no_log: false
+
+# Logging
+postgresql_log_directory: "/var/log/postgresql"
+postgresql_log_filename: '{{ postgresql_version }}.log'
+postgresql_log_timezone: "UTC"
+postgresql_log_line_prefix: '%m [%p]'
+postgresql_log_min_duration_statement: '-1'
+postgresql_log_autovacuum_min_duration: '-1'
+postgresql_log_checkpoints: 'on'
+postgresql_log_connections: 'off'
+postgresql_log_disconnections: 'off'
+postgresql_log_lock_waits: 'on'
+postgresql_log_temp_files: '-1'

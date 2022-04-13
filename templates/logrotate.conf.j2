@@ -1,0 +1,9 @@
+{{ postgresql_log_directory }}/*.log {
+    weekly
+    size 100M
+    rotate 8
+    missingok
+    compress
+    notifempty
+    create 0600 postgres postgres
+}
