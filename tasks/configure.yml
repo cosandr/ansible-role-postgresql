@@ -3,10 +3,13 @@
   lineinfile:
     dest: "{{ postgresql_config_path }}/postgresql.conf"
     regexp: "^#?{{ item.option }}.+$"
-    line: "{{ item.option }} = '{{ item.value }}'"
+    line: "{{ item.option }} = {{ __quoted_value if item.quoted | default(false) else __raw_value }}"
     state: "{{ item.state | default('present') }}"
     mode: 0644
   with_items: "{{ postgresql_global_config_options }}"
+  vars:
+    __raw_value: "{{ item.value }}"
+    __quoted_value: "'{{ item.value }}'"
   notify: restart postgresql
 
 - name: Configure host based authentication (if entries are configured).
