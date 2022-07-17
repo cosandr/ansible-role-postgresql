@@ -1,5 +1,8 @@
 ---
-dependencies: []
+
+dependencies:
+  - name: pg_repo
+    src: https://github.com/cosandr/ansible-role-pg_repo.git
 
 galaxy_info:
   role_name: postgresql

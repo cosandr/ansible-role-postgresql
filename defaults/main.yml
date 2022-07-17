@@ -2,8 +2,6 @@
 # RHEL/CentOS only. Set a repository to use for PostgreSQL installation.
 postgresql_enablerepo: ""
 
-postgresql_official_repo: true
-
 # Set postgresql state when configuration changes are made. Recommended values:
 # `restarted` or `reloaded`
 postgresql_restarted_state: "restarted"
