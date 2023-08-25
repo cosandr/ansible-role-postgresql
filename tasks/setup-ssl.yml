@@ -1,7 +1,7 @@
 ---
 
 - name: Install RPM requirements
-  package:
+  ansible.builtin.package:
     name:
       - python3-cryptography
       - openssl
@@ -9,7 +9,7 @@
   tags: ["install"]
 
 - name: Generate CA
-  shell: >
+  ansible.builtin.shell: >
     openssl req -new -x509
     -days 3650
     -extensions v3_ca
@@ -22,7 +22,7 @@
   notify: restart postgresql
 
 - name: Generate postgresql PK
-  openssl_privatekey:
+  community.crypto.openssl_privatekey:
     path: "{{ postgresql_config_path }}/server.key"
     size: 4096
     owner: "root"
@@ -31,7 +31,7 @@
   notify: restart postgresql
 
 - name: Generate postgresql CSR
-  openssl_csr:
+  community.crypto.openssl_csr:
     path: "/etc/pki/tls/misc/postgres.csr"
     privatekey_path: "{{ postgresql_config_path }}/server.key"
     common_name: "{{ ansible_hostname }}"
@@ -42,7 +42,7 @@
     mode: 0600
 
 - name: Sign postgresql CSR
-  openssl_certificate:
+  community.crypto.x509_certificate:
     path: "{{ postgresql_config_path }}/server.crt"
     csr_path: "/etc/pki/tls/misc/postgres.csr"
     provider: ownca
@@ -51,7 +51,7 @@
   notify: restart postgresql
 
 - name: Copy CA to pgsql
-  copy:
+  ansible.builtin.copy:
     src: "/etc/pki/tls/certs/pg-ca.crt"
     remote_src: true
     owner: postgres

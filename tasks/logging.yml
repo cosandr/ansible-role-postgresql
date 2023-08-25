@@ -1,13 +1,13 @@
 ---
 
 - name: Install logrotate
-  package:
+  ansible.builtin.package:
     name: logrotate
     state: present
   tags: ["install", "logrotate"]
 
 - name: Configure logrotate for postgres
-  template:
+  ansible.builtin.template:
     src: "logrotate.conf.j2"
     dest: "/etc/logrotate.d/postgres"
     owner: root
@@ -16,7 +16,7 @@
   tags: ["logrotate"]
 
 - name: Ensure logging directory exists
-  file:
+  ansible.builtin.file:
     path: "{{ postgresql_log_directory }}"
     state: directory
     owner: postgres
@@ -24,7 +24,7 @@
     mode: 0750
 
 - name: Copy logging config
-  template:
+  ansible.builtin.template:
     src: "logging.conf.j2"
     dest: "{{ postgresql_config_path }}/logging.conf"
     owner: postgres
@@ -33,7 +33,7 @@
   notify: restart postgresql
 
 - name: Configure PostgreSQL logging
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ postgresql_config_path }}/postgresql.conf"
     regexp: "^include 'logging.*"
     line: "include 'logging.conf'"

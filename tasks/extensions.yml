@@ -3,7 +3,7 @@
 - name: Configure PostgreSQL extensions
   become: true
   become_user: "{{ postgresql_user }}"
-  postgresql_ext:
+  community.postgresql.postgresql_ext:
     name: "{{ item.name }}"
     db: "{{ item.db }}"
     schema: "{{ item.schema | default(omit) }}"
