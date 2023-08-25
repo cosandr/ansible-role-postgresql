@@ -61,3 +61,6 @@
 
 - name: Import privs tasks
   ansible.builtin.import_tasks: privs.yml
+
+- name: Import membership tasks
+  ansible.builtin.import_tasks: membership.yml

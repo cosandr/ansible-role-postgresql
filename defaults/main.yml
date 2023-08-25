@@ -88,6 +88,8 @@ postgresql_privileges: []
 #   target_roles: default to not set
 #   grant_option: default to not set
 
+postgresql_memberships: []
+
 # Whether to output user data when managing users.
 postgres_users_no_log: false
 
