@@ -1,31 +1,39 @@
 ---
 # Variable configuration.
-- ansible.builtin.include_tasks: variables.yml
+- name: Include variables
+  ansible.builtin.include_tasks: variables.yml
 
 # Setup/install tasks.
-- ansible.builtin.include_tasks: setup-RedHat.yml
+- name: Include RedHat install tasks
+  ansible.builtin.include_tasks: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
   tags: ["install"]
 
-- ansible.builtin.include_tasks: setup-Archlinux.yml
+- name: Include Arch install tasks
+  ansible.builtin.include_tasks: setup-Archlinux.yml
   when: ansible_os_family == 'Archlinux'
   tags: ["install"]
 
-- ansible.builtin.include_tasks: setup-Debian.yml
+- name: Include Debian install tasks
+  ansible.builtin.include_tasks: setup-Debian.yml
   when: ansible_os_family == 'Debian'
   tags: ["install"]
 
-- ansible.builtin.include_tasks: initialize.yml
+- name: Include initialization tasks
+  ansible.builtin.include_tasks: initialize.yml
   tags: ["install"]
 
-- ansible.builtin.include_tasks: configure.yml
+- name: Include configuration tasks
+  ansible.builtin.include_tasks: configure.yml
   tags: ["configure"]
 
-- ansible.builtin.include_tasks: setup-ssl.yml
+- name: Include SSL tasks
+  ansible.builtin.include_tasks: setup-ssl.yml
   when: postgresql_setup_ssl | bool
   tags: ["ssl"]
 
-- ansible.builtin.include_tasks: logging.yml
+- name: Include logging tasks
+  ansible.builtin.include_tasks: logging.yml
   tags: ["logging"]
 
 - name: Ensure PostgreSQL is started and enabled on boot.
@@ -35,7 +43,14 @@
     enabled: "{{ postgresql_service_enabled }}"
 
 # Configure PostgreSQL.
-- ansible.builtin.import_tasks: users.yml
-- ansible.builtin.import_tasks: databases.yml
-- ansible.builtin.import_tasks: extensions.yml
-- ansible.builtin.import_tasks: users_props.yml
+- name: Import user tasks
+  ansible.builtin.import_tasks: users.yml
+
+- name: Import database tasks
+  ansible.builtin.import_tasks: databases.yml
+
+- name: Import extension tasks
+  ansible.builtin.import_tasks: extensions.yml
+
+- name: Import user props tasks
+  ansible.builtin.import_tasks: users_props.yml

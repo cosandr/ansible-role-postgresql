@@ -30,7 +30,7 @@
     owner: postgres
     group: postgres
     mode: 0644
-  notify: restart postgresql
+  notify: Restart postgresql
 
 - name: Configure PostgreSQL logging
   ansible.builtin.lineinfile:
@@ -38,4 +38,4 @@
     regexp: "^include 'logging.*"
     line: "include 'logging.conf'"
     state: present
-  notify: restart postgresql
+  notify: Restart postgresql
