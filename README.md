@@ -116,7 +116,7 @@ A list of users to ensure exist on the server. Only the `name` is required; all 
         login_password: # defaults to not set
         login_user: # defaults to '{{ postgresql_user }}'
         login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
-        port: # defaults to postgresql_port
+        port: # defaults to not set
         objs: # default to not set
         state: # defaults to not set
         privs: defaults to not set
