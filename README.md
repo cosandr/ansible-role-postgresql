@@ -51,7 +51,7 @@ Control the state of the postgresql service and whether it should start at boot 
         value: 'log'
 Global configuration options that will be set in `postgresql.conf`.
 For PostgreSQL versions older than 9.3 you need to at least override this variable and set the `option` to `unix_socket_directory`.
-If you override the value of `option: log_directory` with another path, relative or absolute, then this role will create it for you. 
+If you override the value of `option: log_directory` with another path, relative or absolute, then this role will create it for you.
 
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
@@ -108,6 +108,23 @@ A list of databases to ensure exist on the server. Only the `name` is required; 
         state: # defaults to 'present'
 
 A list of users to ensure exist on the server. Only the `name` is required; all other properties are optional.
+
+    postgresql_privileges:
+      - database: # required;
+        roles: # required; the rest are optional
+        login_host: # defaults to 'localhost'
+        login_password: # defaults to not set
+        login_user: # defaults to '{{ postgresql_user }}'
+        login_unix_socket: # defaults to 1st of postgresql_unix_socket_directories
+        port: # defaults to postgresql_port
+        objs: # default to not set
+        state: # defaults to not set
+        privs: defaults to not set
+        type: default to not set
+        target_roles: default to not set
+        grant_option: default to not set
+
+A list of privileges to ensure exist on the server. The `database` and `roles` is required; all other properties are optional.
 
     postgres_users_no_log: true
 

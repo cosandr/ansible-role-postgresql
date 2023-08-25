@@ -54,3 +54,6 @@
 
 - name: Import user props tasks
   ansible.builtin.import_tasks: users_props.yml
+
+- name: Import privs tasks
+  ansible.builtin.import_tasks: privs.yml
