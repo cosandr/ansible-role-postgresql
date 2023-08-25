@@ -1,7 +1,11 @@
 ---
 # Variable configuration.
 - name: Include variables
-  ansible.builtin.include_tasks: variables.yml
+  ansible.builtin.include_tasks:
+    file: variables.yml
+    apply:
+      tags: ["install"]
+  tags: ["install"]
 
 # Setup/install tasks.
 - name: Include RedHat install tasks
