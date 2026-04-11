@@ -5,19 +5,16 @@
     file: variables.yml
 
 # Setup/install tasks.
-- name: Include RedHat install tasks
-  ansible.builtin.include_tasks: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- include_tasks: setup-Archlinux.yml
+  when: ansible_facts.os_family == 'Archlinux'
   tags: ["install"]
 
-- name: Include Arch install tasks
-  ansible.builtin.include_tasks: setup-Archlinux.yml
-  when: ansible_os_family == 'Archlinux'
+- include_tasks: setup-Debian.yml
+  when: ansible_facts.os_family == 'Debian'
   tags: ["install"]
 
-- name: Include Debian install tasks
-  ansible.builtin.include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
+- include_tasks: setup-RedHat.yml
+  when: ansible_facts.os_family == 'RedHat'
   tags: ["install"]
 
 - name: Include initialization tasks
@@ -55,9 +52,6 @@
 
 - name: Import user props tasks
   ansible.builtin.import_tasks: users_props.yml
-
-- name: Import privs tasks
-  ansible.builtin.import_tasks: privs.yml
 
 - name: Import membership tasks
   ansible.builtin.import_tasks: membership.yml

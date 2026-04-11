@@ -60,7 +60,6 @@ postgresql_users: []
 # - name: jdoe #required; the rest are optional
 #   password: # defaults to not set
 #   encrypted: # defaults to not set
-#   priv: # defaults to not set
 #   role_attr_flags: # defaults to not set
 #   db: # defaults to not set
 #   login_host: # defaults to 'localhost'
@@ -71,11 +70,21 @@ postgresql_users: []
 #   state: # defaults to 'present'
 
 postgresql_extensions: []
+postgresql_memberships: []
 
-# Privileges to ensure exist
-postgresql_privileges: []
-# - database: # required;
-#   roles: # required; the rest are optional
+# Privileges to configure
+# see https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_privs_module.html#ansible-collections-community-postgresql-postgresql-privs-module
+postgresql_privs: []
+# - db: exampledb # database (required)
+#   roles: jdoe  # role(s) the privs apply to (required)
+#   privs: # comma separated list of privileges - defaults to not set
+#   type: # type of database object to set privileges on - defaults to not set
+#   objs: # list of database objects to set privileges on - defaults to not set
+#   schema: # defaults to not set
+#   session_role: # defaults to not set
+#   fail_on_role: # defaults to true
+#   grant_option: # defaults to not set
+#   target_roles: # defaults to not set
 #   login_host: # defaults to 'localhost'
 #   login_password: # defaults to not set
 #   login_user: # defaults to '{{ postgresql_user }}'
@@ -87,8 +96,7 @@ postgresql_privileges: []
 #   type: default to not set
 #   target_roles: default to not set
 #   grant_option: default to not set
-
-postgresql_memberships: []
+#   state: # defaults to 'present'
 
 # Whether to output user data when managing users.
 postgres_users_no_log: false
