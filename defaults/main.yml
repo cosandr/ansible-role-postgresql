@@ -19,7 +19,9 @@ postgresql_unix_socket_directories:
 postgresql_service_state: started
 postgresql_service_enabled: true
 
-postgresql_setup_ssl: true
+postgresql_ssl_ca_path: ""
+postgresql_ssl_cert_path: ""
+postgresql_ssl_key_path: ""
 
 # Global configuration options that will be set in postgresql.conf.
 postgresql_global_config_options:

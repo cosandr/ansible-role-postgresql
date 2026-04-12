@@ -27,7 +27,6 @@
 
 - name: Include SSL tasks
   ansible.builtin.include_tasks: setup-ssl.yml
-  when: postgresql_setup_ssl | bool
   tags: ["ssl"]
 
 - name: Include logging tasks
