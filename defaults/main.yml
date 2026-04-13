@@ -115,3 +115,4 @@ postgresql_log_connections: 'off'
 postgresql_log_disconnections: 'off'
 postgresql_log_lock_waits: 'on'
 postgresql_log_temp_files: '-1'
+postgresql_configure_logrotate: true

@@ -4,6 +4,7 @@
   ansible.builtin.package:
     name: logrotate
     state: present
+  when: postgresql_configure_logrotate
   tags: ["install", "logrotate"]
 
 - name: Configure logrotate for postgres
@@ -12,7 +13,8 @@
     dest: "/etc/logrotate.d/postgres"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
+  when: postgresql_configure_logrotate
   tags: ["logrotate"]
 
 - name: Ensure logging directory exists
@@ -21,7 +23,7 @@
     state: directory
     owner: postgres
     group: postgres
-    mode: 0750
+    mode: "0750"
 
 - name: Copy logging config
   ansible.builtin.template:
@@ -29,7 +31,7 @@
     dest: "{{ postgresql_config_path }}/logging.conf"
     owner: postgres
     group: postgres
-    mode: 0644
+    mode: "0644"
   notify: Restart postgresql
 
 - name: Configure PostgreSQL logging
