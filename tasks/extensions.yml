@@ -5,7 +5,7 @@
   become_user: "{{ postgresql_user }}"
   community.postgresql.postgresql_ext:
     name: "{{ item.name }}"
-    db: "{{ item.db }}"
+    login_db: "{{ item.db }}"
     schema: "{{ item.schema | default(omit) }}"
     cascade: "{{ item.cascade | default(omit) }}"
     version: "{{ item.version | default(omit) }}"
